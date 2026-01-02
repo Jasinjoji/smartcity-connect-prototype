@@ -24,6 +24,5 @@ HTML Mock Page
 This prototype was developed using Agile principles with sprint-based development
 and user stories.
 
-## Prototype Link
-(Enable GitHub Pages to view the prototype)
+
 
