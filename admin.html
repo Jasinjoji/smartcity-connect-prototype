@@ -1,77 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Admin – SmartCity Connect</title>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard – SmartCity Connect</title>
+
     <style>
         body {
-            font-family: Arial;
-            background: #f4f6f9;
-            padding: 40px;
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(to right, #f4f6f9, #eef2f3);
         }
+
+        nav {
+            background: #2e8b57;
+            padding: 10px 0;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        nav a {
+            color: white;
+            margin: 0 22px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            padding: 50px 20px;
+        }
+
         .card {
             background: white;
-            padding: 25px;
-            max-width: 600px;
-            margin: auto;
-            border-radius: 12px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            padding: 40px;
+            max-width: 700px;
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
         }
+
+        h2 {
+            text-align: center;
+            margin-top: 0;
+        }
+
         .complaint {
             background: #eef3f7;
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 8px;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
         }
     </style>
 </head>
 
 <body>
-<nav style="
-    background:#2e8b57;
-    padding:6px 0;
-    text-align:center;
-">
-    <a href="index.html" style="
-        color:white;
-        margin:0 18px;
-        text-decoration:none;
-        font-weight:600;
-        font-size:14px;
-        line-height:1;
-    ">Home</a>
 
-    <a href="report.html" style="
-        color:white;
-        margin:0 18px;
-        text-decoration:none;
-        font-weight:600;
-        font-size:14px;
-        line-height:1;
-    ">Report Issue</a>
-
-    <a href="admin.html" style="
-        color:white;
-        margin:0 18px;
-        text-decoration:none;
-        font-weight:600;
-        font-size:14px;
-        line-height:1;
-    ">Admin Dashboard</a>
+<nav>
+    <a href="index.html">Home</a>
+    <a href="report.html">Report Issue</a>
+    <a href="admin.html">Admin Dashboard</a>
 </nav>
 
+<div class="container">
+    <div class="card">
+        <h2>Municipal Dashboard</h2>
+        <p style="text-align:center;color:#555">
+            View complaints submitted by citizens
+        </p>
 
-<div class="card">
-    <h2>Municipal Dashboard</h2>
-    <p>View submitted complaints</p>
-
-    <div id="list"></div>
+        <div id="list"></div>
+    </div>
 </div>
 
 <script>
 const list = document.getElementById("list");
 
 if(localStorage.length === 0) {
-    list.innerHTML = "No complaints yet.";
+    list.innerHTML = "<p>No complaints submitted yet.</p>";
 }
 
 for(let i = 0; i < localStorage.length; i++) {
@@ -79,9 +86,10 @@ for(let i = 0; i < localStorage.length; i++) {
     const c = JSON.parse(localStorage.getItem(key));
 
     list.innerHTML +=
-        "<div class='complaint'><b>ID:</b> " + key +
-        "<br><b>Issue:</b> " + c.issue +
-        "<br><b>Status:</b> " + c.status +
+        "<div class='complaint'>" +
+        "<b>ID:</b> " + key + "<br>" +
+        "<b>Issue:</b> " + c.issue + "<br>" +
+        "<b>Status:</b> " + c.status +
         "</div>";
 }
 </script>
