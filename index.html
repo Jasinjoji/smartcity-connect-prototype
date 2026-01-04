@@ -1,36 +1,138 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>SmartCity Connect</title>
+
     <style>
-        body { font-family: Arial; background: #f4f6f9; padding: 20px; }
-        .card { background: white; padding: 20px; border-radius: 10px; max-width: 500px; margin: auto; }
-        input, textarea, select, button {
-            width: 100%; padding: 10px; margin-top: 10px;
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 40px;
         }
+
+        .card {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            max-width: 500px;
+            margin: auto;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        select, textarea, input[type="file"], button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 12px;
+            font-size: 14px;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
         button {
-            background: #2e8b57; color: white; border: none;
-            border-radius: 5px;
+            background: #2e8b57;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 18px;
+        }
+
+        button:hover {
+            background: #256f46;
+        }
+
+        .success {
+            margin-top: 15px;
+            color: green;
+            font-weight: bold;
+        }
+
+        .error {
+            margin-top: 15px;
+            color: red;
+        }
+
+        .status-box {
+            margin-top: 20px;
+            padding: 12px;
+            background: #eef3f7;
+            border-radius: 8px;
         }
     </style>
 </head>
+
 <body>
 
 <div class="card">
     <h2>SmartCity Connect</h2>
     <p>Report city issues and help build sustainable cities.</p>
 
-    <select>
-        <option>Select Issue Type</option>
+    <select id="issueType">
+        <option value="">Select Issue Type</option>
         <option>Garbage Overflow</option>
         <option>Pothole</option>
         <option>Streetlight Issue</option>
         <option>Water Leakage</option>
     </select>
 
-    <textarea placeholder="Describe the issue"></textarea>
-    <input type="file">
-    <button>Submit Complaint</button>
+    <textarea id="description" placeholder="Describe the issue"></textarea>
+
+    <input type="file" id="image">
+
+    <button onclick="submitComplaint()">Submit Complaint</button>
+
+    <div id="message"></div>
+    <div id="status"></div>
 </div>
+
+<script>
+function submitComplaint() {
+    const issueType = document.getElementById("issueType").value;
+    const description = document.getElementById("description").value;
+    const messageDiv = document.getElementById("message");
+    const statusDiv = document.getElementById("status");
+
+    messageDiv.innerHTML = "";
+    statusDiv.innerHTML = "";
+
+    if (issueType === "" || description.trim() === "") {
+        messageDiv.innerHTML = "<div class='error'>Please fill all required fields.</div>";
+        return;
+    }
+
+    const complaintId = "SC-" + Math.floor(Math.random() * 10000);
+
+    const complaint = {
+        id: complaintId,
+        issue: issueType,
+        description: description,
+        status: "Submitted"
+    };
+
+    localStorage.setItem(complaintId, JSON.stringify(complaint));
+
+    messageDiv.innerHTML =
+        "<div class='success'>Complaint submitted successfully!</div>";
+
+    statusDiv.innerHTML =
+        "<div class='status-box'>" +
+        "<strong>Complaint ID:</strong> " + complaintId + "<br>" +
+        "<strong>Status:</strong> Submitted (Pending Review)" +
+        "</div>";
+
+    document.getElementById("issueType").value = "";
+    document.getElementById("description").value = "";
+    document.getElementById("image").value = "";
+}
+</script>
+
 </body>
 </html>
