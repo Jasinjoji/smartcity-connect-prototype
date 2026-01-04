@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin – SmartCity Connect</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f9;
+            padding: 40px;
+        }
+        .card {
+            background: white;
+            padding: 25px;
+            max-width: 600px;
+            margin: auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .complaint {
+            background: #eef3f7;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>Municipal Dashboard</h2>
+    <p>View submitted complaints</p>
+
+    <div id="list"></div>
+</div>
+
+<script>
+const list = document.getElementById("list");
+
+if(localStorage.length === 0) {
+    list.innerHTML = "No complaints yet.";
+}
+
+for(let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    const c = JSON.parse(localStorage.getItem(key));
+
+    list.innerHTML +=
+        "<div class='complaint'><b>ID:</b> " + key +
+        "<br><b>Issue:</b> " + c.issue +
+        "<br><b>Status:</b> " + c.status +
+        "</div>";
+}
+</script>
+
+</body>
+</html>

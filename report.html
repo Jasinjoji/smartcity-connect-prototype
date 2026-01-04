@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Report Issue – SmartCity Connect</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f9;
+            padding: 40px;
+        }
+        .card {
+            background: white;
+            padding: 25px;
+            max-width: 500px;
+            margin: auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        select, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 12px;
+        }
+        button {
+            background: #2e8b57;
+            color: white;
+            border: none;
+            border-radius: 6px;
+        }
+        .success {
+            margin-top: 15px;
+            color: green;
+            font-weight: bold;
+        }
+        .status-box {
+            background: #eef3f7;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>Report City Issue</h2>
+
+    <select id="issue">
+        <option value="">Select Issue Type</option>
+        <option>Garbage Overflow</option>
+        <option>Pothole</option>
+        <option>Streetlight Issue</option>
+        <option>Water Leakage</option>
+    </select>
+
+    <textarea id="desc" placeholder="Describe the issue"></textarea>
+
+    <button onclick="submitIssue()">Submit Complaint</button>
+
+    <div id="msg"></div>
+</div>
+
+<script>
+function submitIssue() {
+    const issue = document.getElementById("issue").value;
+    const desc = document.getElementById("desc").value;
+    const msg = document.getElementById("msg");
+
+    if(issue === "" || desc === "") {
+        msg.innerHTML = "<p style='color:red'>Please fill all fields</p>";
+        return;
+    }
+
+    const id = "SC-" + Math.floor(Math.random()*10000);
+    localStorage.setItem(id, JSON.stringify({
+        issue: issue,
+        desc: desc,
+        status: "Pending Review"
+    }));
+
+    msg.innerHTML =
+        "<div class='success'>Complaint Submitted!</div>" +
+        "<div class='status-box'><b>ID:</b> " + id +
+        "<br><b>Status:</b> Pending Review</div>";
+}
+</script>
+
+</body>
+</html>
